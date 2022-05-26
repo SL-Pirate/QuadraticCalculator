@@ -20,7 +20,6 @@ public class MainActivity extends AppCompatActivity {
         double a;
         double b;
         double c;
-        String[] output;
 
         try{
             String a_in = ((EditText)findViewById(R.id.a_in)).getText().toString();
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
             String[] input = {a_in, b_in, c_in};
 
-            for (byte i=0;i<input.length;i++){
+            for (int i=0;i<input.length;i++){
                 switch(input[i]){
                     case "": input[i] = checkRound(i);
                         break;
@@ -46,18 +45,22 @@ public class MainActivity extends AppCompatActivity {
             c = Double.parseDouble(input[2]);
 
             Cal cal = new Cal(a, b, c);
-            output = cal.run();
-
             String out;
 
-            switch (output[5]){
-                case "0": out = "Equation: " + output[0] + "\nDiscriminant: " + output[1] + "\nEquation has a: "+ output[7]+ "\nEquation is:\n\t"+ output[6] + "\nEquation has " + output[2];
+            switch (cal.getCode()){
+                case -1: out = "Something went wrong\nError code: -1";
                 break;
 
-                case "1": out = "Equation: " + output[0] + "\nDiscriminant: " + output[1] + "\nEquation has a: "+ output[7]+ "\nEquation is:\n\t"+ output[6] + "\nEquation has " + output[2] + "\nroots: " + output[3];
+                case 0: out = "Equation: " + cal.getEquation() + "\nDiscriminant: " + cal.getDiscriminant() + "\nEquation has a: " + cal.getMinOrMax() + "\nEquation is:\n\t" + cal.getRange() + "\nEquation has " + cal.getNature();
                 break;
 
-                case "2": out = "Equation: " + output[0] + "\nDiscriminant: " + output[1] + "\nEquation has a: "+ output[7]+ "\nEquation is:\n\t"+ output[6] + "\nEquation has " + output[2] + "\nroots: " + output[3] + "\n\t\t" + output[4];
+                case 1: out = "Equation: " + cal.getEquation() + "\nDiscriminant: " + cal.getDiscriminant() +  "\nEquation has a: " + cal.getMinOrMax() + "\nEquation is:\n\t" + cal.getRange() + "\nEquation has " + cal.getNature() + "\nroots: " + cal.getRoot(0);
+                break;
+
+                case 2: out = "Equation: " + cal.getEquation() + "\nDiscriminant: " + cal.getDiscriminant() + "\nEquation has a: " + cal.getMinOrMax() + "\nEquation is:\n\t" + cal.getRange() + "\nEquation has " + cal.getNature() + "\nroots: " + cal.getRoot(0) + "\n\t\t" + cal.getRoot(1);
+                break;
+
+                case 3: out = "Something went wrong\nError code: 3";
                 break;
 
                 default: out = "something went wrong";
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Empty value of " + c + " has been replaced with 1", Toast.LENGTH_LONG).show();
         }
     }
-    String checkRound(byte i){
+    String checkRound(int i){
         char e = 'e';
         switch (i){
             case 0: e = 'a';
