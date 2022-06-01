@@ -1,6 +1,8 @@
-# QuadraticCalculator-Android
-Quadratic calculator made for Android with Java
+# QuadraticCalculator
+Quadratic calculator made for Desktop with C++
 
-Use android studio to build 
+Use Code::Blocks to build 
 
-Download and place this directory in `app/src/main/` inside android studio and build.
+**Building Instructions**
+Install wxWidgets
+Download and import `Quadratic Calculator.cbp` inside Code::Blocks and build.
